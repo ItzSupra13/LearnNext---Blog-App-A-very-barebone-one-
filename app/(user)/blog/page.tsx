@@ -6,9 +6,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { fetchQuery } from "convex/nextjs"
-import { Suspense } from "react"
+import { cache, Suspense } from "react"
 import Loading  from "@/app/(user)/blog/load"
 import { connection } from "next/server"
+import { cacheLife, cacheTag } from "next/cache"
 
 export const dynamic = "force-static"; //while deploying its kept dynammic but next commit changed to static
 export const revalidate = 30
@@ -32,7 +33,9 @@ export default function BlogPage() {
 }
 
 async function LoadAllBlogs(){
-  await connection()
+  "use cache"
+  cacheLife("hours")
+  cacheTag("blog")
     const posts = await fetchQuery(api.posts.getPosts)
     return (
         <>
