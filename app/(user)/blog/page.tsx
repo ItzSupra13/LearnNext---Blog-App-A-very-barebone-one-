@@ -8,8 +8,9 @@ import { buttonVariants } from "@/components/ui/button"
 import { fetchQuery } from "convex/nextjs"
 import { Suspense } from "react"
 import Loading  from "@/app/(user)/blog/load"
+import { connection } from "next/server"
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static"; //while deploying its kept dynammic but next commit changed to static
 export const revalidate = 30
 
 export default function BlogPage() {
@@ -31,6 +32,7 @@ export default function BlogPage() {
 }
 
 async function LoadAllBlogs(){
+  await connection()
     const posts = await fetchQuery(api.posts.getPosts)
     return (
         <>
