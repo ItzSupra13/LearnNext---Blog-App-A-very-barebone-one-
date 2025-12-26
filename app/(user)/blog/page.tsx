@@ -9,7 +9,7 @@ import { fetchQuery } from "convex/nextjs"
 import { Suspense } from "react"
 import Loading  from "@/app/(user)/blog/load"
 
-export const dynamic = "force-static"
+export const dynamic = "force-dynamic";
 export const revalidate = 30
 
 export default function BlogPage() {
